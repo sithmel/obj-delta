@@ -1,0 +1,36 @@
+{
+  "name": "obj-delta",
+  "version": "0.0.0",
+  "description": "A diff object that applies changes to an object in a way that share common structure where possible",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.js",
+    "watch": "npm run test -- -w",
+    "lint": "eslint --ext .js ./src ./tests",
+    "release:major": "npm-release major",
+    "release:minor": "npm-release minor",
+    "release:patch": "npm-release patch",
+    "precommit": "npm run lint",
+    "prepush": "npm run test"
+  },
+  "keyword": [
+    "redux",
+    "immutable",
+    "diff",
+    "patch"
+  ],
+  "repository": "git@github.com:sithmel/obj-delta.git",
+  "author": "Maurizio Lupo <maurizio.lupo@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.9.0",
+    "husky": "^0.14.3",
+    "mocha": "^4.0.1",
+    "npm-release": "^1.0.0"
+  },
+  "dependencies": {
+    "array-cursor": "0.0.2",
+    "lodash": "^4.17.4"
+  }
+}
