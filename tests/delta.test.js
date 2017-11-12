@@ -77,5 +77,13 @@ describe('Delta', function () {
       assert.deepEqual(newObj, { hello: { world: 2, other: 2 }, hello2: {} });
       assert.equal(newObj.hello2, obj.hello2)
     });
+
+    it('map', function () {
+      var delta = Delta().map('hello.world', function (item) { return item * 2; });
+      var obj = { hello: { world: [3, 2], other: 2 }, hello2: {} };
+      var newObj = delta.apply(obj);
+      assert.deepEqual(newObj, { hello: { world: [6, 4], other: 2 }, hello2: {} });
+      assert.equal(newObj.hello2, obj.hello2)
+    });
   });
 });
