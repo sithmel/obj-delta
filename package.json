@@ -30,7 +30,6 @@
     "npm-release": "^1.0.0"
   },
   "dependencies": {
-    "array-cursor": "0.0.2",
     "lodash": "^4.17.4"
   }
 }

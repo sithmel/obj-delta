@@ -20,23 +20,23 @@ describe('Delta', function () {
     it('set', function () {
       var delta = Delta().set('hello', 'world');
       assert.equal(delta.diff.length, 1);
-      assert.deepEqual(delta.diff[0].p.data, ['hello']);
+      assert.deepEqual(delta.diff[0].p, 'hello');
       assert.equal(delta.diff[0].c, 'set');
-      assert.deepEqual(delta.diff[0].args, ['world']);
+      assert.deepEqual(delta.diff[0].arg, 'world');
     });
     it('del', function () {
       var delta = Delta().del('hello');
       assert.equal(delta.diff.length, 1);
-      assert.deepEqual(delta.diff[0].p.data, ['hello']);
+      assert.deepEqual(delta.diff[0].p, 'hello');
       assert.equal(delta.diff[0].c, 'del');
     });
     it('transform', function () {
       var callback = function (item) { return item; };
       var delta = Delta().transform('hello', callback);
       assert.equal(delta.diff.length, 1);
-      assert.deepEqual(delta.diff[0].p.data, ['hello']);
+      assert.deepEqual(delta.diff[0].p, 'hello');
       assert.equal(delta.diff[0].c, 'transform');
-      assert.deepEqual(delta.diff[0].args, [callback]);
+      assert.deepEqual(delta.diff[0].arg, callback);
     });
   });
 });

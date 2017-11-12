@@ -5,7 +5,7 @@ var ArrayCursor = require('array-cursor');
 describe('smart clone', function () {
   it('clones a simple object', function () {
     var obj = { hello: {}, world: {} };
-    var newObj = smartClone(obj, [new ArrayCursor(['hello'])]);
+    var newObj = smartClone(obj, { hello: true });
 
     assert.deepEqual(obj, newObj);
     assert.notEqual(obj, newObj);
@@ -19,7 +19,7 @@ describe('smart clone', function () {
       world1: {}
     },
     world: {} };
-    var newObj = smartClone(obj, [new ArrayCursor(['hello', 'world'])]);
+    var newObj = smartClone(obj, { hello: { world: true } });
     assert.deepEqual(obj, newObj);
     assert.notEqual(obj, newObj);
     assert.notEqual(obj.hello, newObj.hello);
@@ -30,7 +30,7 @@ describe('smart clone', function () {
 
   it('clones a value', function () {
     var obj = 1;
-    var newObj = smartClone(obj, [new ArrayCursor(['hello'])]);
+    var newObj = smartClone(obj, { hello: true });
     assert.deepEqual(obj, newObj);
   });
 });
