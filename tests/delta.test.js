@@ -22,15 +22,15 @@ describe('Delta', function () {
       assert.equal(delta.diff.length, 1);
       assert.deepEqual(delta.diff[0].p, 'hello');
       assert.equal(delta.diff[0].c, 'set');
-      assert.deepEqual(delta.diff[0].arg, 'world');
-      assert.deepEqual(delta.toJSON(), '[{"c":"set","p":"hello","arg":"world"}]')
+      assert.deepEqual(delta.diff[0].args, ['world']);
+      assert.deepEqual(delta.toJSON(), '[{"c":"set","p":"hello","args":["world"]}]')
     });
     it('del', function () {
       var delta = Delta().del('hello');
       assert.equal(delta.diff.length, 1);
       assert.deepEqual(delta.diff[0].p, 'hello');
       assert.equal(delta.diff[0].c, 'del');
-      assert.deepEqual(delta.toJSON(), '[{"c":"del","p":"hello"}]')
+      assert.deepEqual(delta.toJSON(), '[{"c":"del","p":"hello","args":[]}]')
     });
     it('transform', function () {
       var callback = function (item) { return item; };
@@ -38,7 +38,7 @@ describe('Delta', function () {
       assert.equal(delta.diff.length, 1);
       assert.deepEqual(delta.diff[0].p, 'hello');
       assert.equal(delta.diff[0].c, 'transform');
-      assert.deepEqual(delta.diff[0].arg, callback);
+      assert.deepEqual(delta.diff[0].args, [callback]);
       assert.throws(function () {
         delta.toJSON();
       }, Error);
