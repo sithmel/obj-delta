@@ -1,6 +1,6 @@
-var _set = require('lodash/set');
 var smartClone = require('./src/smartClone');
 var commands = require('./src/commands');
+var addToChangeTree = require('./src/addToChangeTree');
 
 function Delta(diff) {
   if (!(this instanceof Delta)) {
@@ -9,7 +9,7 @@ function Delta(diff) {
   this.diff = diff || [];
   this.changeTree = {};
   for (var i = 0; i < this.diff; i++) {
-    _set(this.changeTree, this.diff[i].p, true);
+    addToChangeTree(this.changeTree, this.diff[i].p);
   }
 }
 
@@ -33,7 +33,7 @@ Delta.prototype.toJSON = function toJSON() {
 
 Delta.prototype._addCommand = function _addCommand(command, path, arg) {
   this.diff.push({ c: command, p: path, arg: arg });
-  _set(this.changeTree, path, true);
+  addToChangeTree(this.changeTree, path);
   return this;
 };
 
