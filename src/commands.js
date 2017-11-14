@@ -142,6 +142,7 @@ module.exports = {
   insert: insert,
   merge: merge,
   slice: slice,
+  removeIndexes: removeKeys,
   removeKeys: removeKeys,
   removeValues: removeValues,
 };

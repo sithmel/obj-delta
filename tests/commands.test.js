@@ -14,6 +14,12 @@ describe('commands', function () {
     assert.deepEqual(obj, { hello: {} });
   });
 
+  it('del (array)', function () {
+    var obj = { hello: [0, 1, 2] };
+    c.del(obj, 'hello[1]')
+    assert.deepEqual(obj, { hello: [0, 2] });
+  });
+
   it('transform', function () {
     var obj = { hello: { world: 2 } };
     c.transform(obj, 'hello.world', [function (n) { return n * 2; }]);
