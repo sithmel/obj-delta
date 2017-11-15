@@ -101,7 +101,10 @@ function insert(obj, path, args) {
 function merge(obj, path, args) {
   var objToMerge = args[0];
   _transform(obj, path, function (item) {
-    return _assign({}, item, objToMerge);
+    if (_isPlainObject(item)) {
+      return _assign({}, item, objToMerge);
+    }
+    return item;
   });
 }
 
@@ -118,14 +121,14 @@ function slice(obj, path, args) {
 }
 
 function removeKeys(obj, path, args) {
-  var keys = args[0];
+  var keys = Array.isArray(args[0]) ? args[0] : [args[0]];
   filter(obj, path, [function (value, key) {
     return !_includes(keys, key);
   }]);
 }
 
 function removeValues(obj, path, args) {
-  var values = args[0];
+  var values = Array.isArray(args[0]) ? args[0] : [args[0]];
   filter(obj, path, [function (value, key) {
     return !_includes(values, value);
   }]);
