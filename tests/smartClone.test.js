@@ -1,6 +1,5 @@
 var assert = require('chai').assert;
 var smartClone = require('../src/smartClone');
-var ArrayCursor = require('array-cursor');
 
 describe('smart clone', function () {
   it('clones a simple object', function () {
