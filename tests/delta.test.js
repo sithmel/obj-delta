@@ -86,4 +86,59 @@ describe('Delta', function () {
       assert.equal(newObj.hello2, obj.hello2)
     });
   });
+
+  describe('diff', function () {
+    var delta;
+    beforeEach(function () {
+      delta = new Delta();
+    });
+    it('no diff', function () {
+      delta.diff({ hello: 2 }, { hello: 2 });
+      assert.deepEqual(delta._diff, []);
+    });
+    it('one diff', function () {
+      delta.diff({ hello: 1 }, { hello: 2 });
+      assert.deepEqual(delta._diff, [
+        { c: 'set', p: ['hello'], args: [2] }
+      ]);
+    });
+    it('two diffs', function () {
+      delta.diff({ hello: 1, world: 2 }, { hello: 2, world: 3 });
+      assert.deepEqual(delta._diff, [
+        { c: 'set', p: ['hello'], args: [2] },
+        { c: 'set', p: ['world'], args: [3] }
+      ]);
+    });
+    it('deep diff', function () {
+      delta.diff({ hello: { world: 1} }, { hello: { world: 2} });
+      assert.deepEqual(delta._diff, [
+        { c: 'set', p: ['hello', 'world'], args: [2] },
+      ]);
+    });
+    it('extra key to remove', function () {
+      delta.diff({ hello: 1, world: 2 }, { hello: 1 });
+      assert.deepEqual(delta._diff, [
+        { c: 'del', p: ['world'], args: [] },
+      ]);
+    });
+    it('extra key to add', function () {
+      delta.diff({ hello: 1 }, { hello: 1, world: 2 });
+      assert.deepEqual(delta._diff, [
+        { c: 'set', p: ['world'], args: [2] },
+      ]);
+    });
+    it('different types 1', function () {
+      delta.diff({ hello: [1, 2] }, { hello: { a: 1 } });
+      assert.deepEqual(delta._diff, [
+        { c: 'set', p: ['hello'], args: [{ a: 1 }] },
+      ]);
+    });
+    it('different types 2', function () {
+      delta.diff({ hello: { a: 1 } }, { hello: [1, 2] });
+      assert.deepEqual(delta._diff, [
+        { c: 'set', p: ['hello'], args: [[1, 2]] },
+      ]);
+    });
+
+  });
 });
