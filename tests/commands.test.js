@@ -113,7 +113,7 @@ describe('commands', function () {
   it('merge (array)', function () {
     var obj = { hello: { world: [1, 2, 3] } };
     c.merge(obj, 'hello.world', [{ a: 3, c: 4 }]);
-    assert.deepEqual(obj, { hello: { world: {a: 3, c: 4, '0': 1, '1': 2, '2': 3 } } });
+    assert.deepEqual(obj, { hello: { world: [1, 2, 3] } });
   });
 
   it('slice (array)', function () {
