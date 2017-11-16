@@ -11,34 +11,34 @@ describe('Delta', function () {
   it('can be initialised/converted to JSON', function () {
     var diff = [{ p: 'test' }];
     var delta = new Delta(diff);
-    assert.deepEqual(delta.diff, diff);
-    var json = JSON.stringify(delta.diff);
+    assert.deepEqual(delta._diff, diff);
+    var json = JSON.stringify(delta._diff);
     assert.deepEqual(JSON.parse(json), diff);
   });
 
   describe('queue commands', function () {
     it('set', function () {
       var delta = Delta().set('hello', 'world');
-      assert.equal(delta.diff.length, 1);
-      assert.deepEqual(delta.diff[0].p, 'hello');
-      assert.equal(delta.diff[0].c, 'set');
-      assert.deepEqual(delta.diff[0].args, ['world']);
+      assert.equal(delta._diff.length, 1);
+      assert.deepEqual(delta._diff[0].p, 'hello');
+      assert.equal(delta._diff[0].c, 'set');
+      assert.deepEqual(delta._diff[0].args, ['world']);
       assert.deepEqual(delta.toJSON(), '[{"c":"set","p":"hello","args":["world"]}]')
     });
     it('del', function () {
       var delta = Delta().del('hello');
-      assert.equal(delta.diff.length, 1);
-      assert.deepEqual(delta.diff[0].p, 'hello');
-      assert.equal(delta.diff[0].c, 'del');
+      assert.equal(delta._diff.length, 1);
+      assert.deepEqual(delta._diff[0].p, 'hello');
+      assert.equal(delta._diff[0].c, 'del');
       assert.deepEqual(delta.toJSON(), '[{"c":"del","p":"hello","args":[]}]')
     });
     it('transform', function () {
       var callback = function (item) { return item; };
       var delta = Delta().transform('hello', callback);
-      assert.equal(delta.diff.length, 1);
-      assert.deepEqual(delta.diff[0].p, 'hello');
-      assert.equal(delta.diff[0].c, 'transform');
-      assert.deepEqual(delta.diff[0].args, [callback]);
+      assert.equal(delta._diff.length, 1);
+      assert.deepEqual(delta._diff[0].p, 'hello');
+      assert.equal(delta._diff[0].c, 'transform');
+      assert.deepEqual(delta._diff[0].args, [callback]);
       assert.throws(function () {
         delta.toJSON();
       }, Error);

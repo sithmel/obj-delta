@@ -8,6 +8,7 @@ var _toPath = require('lodash/toPath');
 var _assign = require('lodash/assign');
 var _includes = require('lodash/includes');
 var _pickBy = require('lodash/pickBy');
+var _isArray = require('lodash/isArray');
 
 function set(obj, path, args) {
   var value = args[0];
@@ -17,7 +18,7 @@ function set(obj, path, args) {
 function del(obj, path) {
   var pathArray = _toPath(path);
   var parentObj = _get(obj, pathArray.slice(0, -1));
-  if (Array.isArray(parentObj)) {
+  if (_isArray(parentObj)) {
     parentObj.splice(pathArray[pathArray.length - 1], 1);
   } else if (_isPlainObject(parentObj)){
     delete parentObj[pathArray[pathArray.length - 1]];
@@ -37,7 +38,7 @@ function transform(obj, path, args) {
 function map(obj, path, args) {
   var func = args[0];
   _transform(obj, path, function (item) {
-    if (Array.isArray(item)) {
+    if (_isArray(item)) {
       return _map(item, func);
     } else if (_isPlainObject(item)) {
       return _mapValues(item, func);
@@ -50,7 +51,7 @@ function map(obj, path, args) {
 function filter(obj, path, args) {
   var func = args[0];
   _transform(obj, path, function (item) {
-    if (Array.isArray(item)) {
+    if (_isArray(item)) {
       return _filter(item, func);
     } else if (_isPlainObject(item)) {
       return _pickBy(item, func);
@@ -63,7 +64,7 @@ function filter(obj, path, args) {
 function append(obj, path, args) {
   var arr = args[0];
   _transform(obj, path, function (item) {
-    if (Array.isArray(item)) {
+    if (_isArray(item)) {
       return item.concat(arr);
     } else {
       return [item].concat(arr);
@@ -74,7 +75,7 @@ function append(obj, path, args) {
 function prepend(obj, path, args) {
   var arr = args[0];
   _transform(obj, path, function (item) {
-    if (Array.isArray(item)) {
+    if (_isArray(item)) {
       return arr.concat(item);
     } else {
       return arr.concat([item]);
@@ -88,7 +89,7 @@ function insert(obj, path, args) {
 
   _transform(obj, path, function (item) {
     var head, tail;
-    if (Array.isArray(item)) {
+    if (_isArray(item)) {
       head = item.slice(0, index);
       tail = item.slice(index);
       return [].concat(head, arr, tail);
@@ -112,7 +113,7 @@ function slice(obj, path, args) {
   var begin = args[0];
   var end = args[1];
   _transform(obj, path, function (item) {
-    if (Array.isArray(item)) {
+    if (_isArray(item)) {
       return item.slice(begin, end);
     } else {
       return item;
@@ -121,14 +122,14 @@ function slice(obj, path, args) {
 }
 
 function removeKeys(obj, path, args) {
-  var keys = Array.isArray(args[0]) ? args[0] : [args[0]];
+  var keys = _isArray(args[0]) ? args[0] : [args[0]];
   filter(obj, path, [function (value, key) {
     return !_includes(keys, key);
   }]);
 }
 
 function removeValues(obj, path, args) {
-  var values = Array.isArray(args[0]) ? args[0] : [args[0]];
+  var values = _isArray(args[0]) ? args[0] : [args[0]];
   filter(obj, path, [function (value, key) {
     return !_includes(values, value);
   }]);
