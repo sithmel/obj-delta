@@ -23,14 +23,14 @@ describe('Delta', function () {
       assert.deepEqual(delta._diff[0].p, 'hello');
       assert.equal(delta._diff[0].c, 'set');
       assert.deepEqual(delta._diff[0].args, ['world']);
-      assert.deepEqual(delta.toJSON(), '[{"c":"set","p":"hello","args":["world"]}]')
+      assert.deepEqual(delta.toJSON(), '[{"c":"set","p":"hello","args":["world"]}]');
     });
     it('del', function () {
       var delta = Delta().del('hello');
       assert.equal(delta._diff.length, 1);
       assert.deepEqual(delta._diff[0].p, 'hello');
       assert.equal(delta._diff[0].c, 'del');
-      assert.deepEqual(delta.toJSON(), '[{"c":"del","p":"hello","args":[]}]')
+      assert.deepEqual(delta.toJSON(), '[{"c":"del","p":"hello","args":[]}]');
     });
     it('transform', function () {
       var callback = function (item) { return item; };
@@ -51,7 +51,7 @@ describe('Delta', function () {
       var obj = { subtree: { test: 1 } };
       var newObj = delta.apply(obj);
       assert.deepEqual(newObj, { hello: 'world', subtree: { test: 1 } });
-      assert.equal(newObj.subtree, obj.subtree)
+      assert.equal(newObj.subtree, obj.subtree);
     });
 
     it('del', function () {
@@ -59,7 +59,7 @@ describe('Delta', function () {
       var obj = { hello: { world: 1, other: 2 }, hello2: {} };
       var newObj = delta.apply(obj);
       assert.deepEqual(newObj, { hello: { other: 2 }, hello2: {} });
-      assert.equal(newObj.hello2, obj.hello2)
+      assert.equal(newObj.hello2, obj.hello2);
     });
 
     it('del on an array', function () {
@@ -67,7 +67,7 @@ describe('Delta', function () {
       var obj = { hello: [1, 2, 3], hello2: {} };
       var newObj = delta.apply(obj);
       assert.deepEqual(newObj, { hello: [1, 3], hello2: {} });
-      assert.equal(newObj.hello2, obj.hello2)
+      assert.equal(newObj.hello2, obj.hello2);
     });
 
     it('transform', function () {
@@ -75,7 +75,7 @@ describe('Delta', function () {
       var obj = { hello: { world: 1, other: 2 }, hello2: {} };
       var newObj = delta.apply(obj);
       assert.deepEqual(newObj, { hello: { world: 2, other: 2 }, hello2: {} });
-      assert.equal(newObj.hello2, obj.hello2)
+      assert.equal(newObj.hello2, obj.hello2);
     });
 
     it('map', function () {
@@ -83,7 +83,7 @@ describe('Delta', function () {
       var obj = { hello: { world: [3, 2], other: 2 }, hello2: {} };
       var newObj = delta.apply(obj);
       assert.deepEqual(newObj, { hello: { world: [6, 4], other: 2 }, hello2: {} });
-      assert.equal(newObj.hello2, obj.hello2)
+      assert.equal(newObj.hello2, obj.hello2);
     });
   });
 

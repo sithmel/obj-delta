@@ -4,19 +4,19 @@ var c = require('../src/commands');
 describe('commands', function () {
   it('set', function () {
     var obj = { hello: { world: 2 } };
-    c.set(obj, 'hello.world', [3])
+    c.set(obj, 'hello.world', [3]);
     assert.deepEqual(obj, { hello: { world: 3 } });
   });
 
   it('del', function () {
     var obj = { hello: { world: 2 } };
-    c.del(obj, 'hello.world')
+    c.del(obj, 'hello.world');
     assert.deepEqual(obj, { hello: {} });
   });
 
   it('del (array)', function () {
     var obj = { hello: [0, 1, 2] };
-    c.del(obj, 'hello[1]')
+    c.del(obj, 'hello[1]');
     assert.deepEqual(obj, { hello: [0, 2] });
   });
 

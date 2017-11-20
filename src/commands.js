@@ -20,7 +20,7 @@ function del(obj, path) {
   var parentObj = _get(obj, pathArray.slice(0, -1));
   if (_isArray(parentObj)) {
     parentObj.splice(pathArray[pathArray.length - 1], 1);
-  } else if (_isPlainObject(parentObj)){
+  } else if (_isPlainObject(parentObj)) {
     delete parentObj[pathArray[pathArray.length - 1]];
   }
 }
