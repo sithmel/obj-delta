@@ -1,16 +1,16 @@
-var shallowCopy = require('lodash/clone');
+var shallowCopy = require('lodash/clone')
 
-function smartClone(obj, changeTree) {
-  var newObj;
+function smartClone (obj, changeTree) {
+  var newObj
   if (!changeTree) {
-    return obj;
+    return obj
   } else {
-    newObj = shallowCopy(obj);
+    newObj = shallowCopy(obj)
     for (var key in newObj) {
-      newObj[key] = smartClone(newObj[key], changeTree[key]);
+      newObj[key] = smartClone(newObj[key], changeTree[key])
     }
-    return newObj;
+    return newObj
   }
 }
 
-module.exports = smartClone;
+module.exports = smartClone

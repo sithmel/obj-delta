@@ -1,138 +1,138 @@
-var _set = require('lodash/set');
-var _get = require('lodash/get');
-var _map = require('lodash/map');
-var _mapValues = require('lodash/mapValues');
-var _filter = require('lodash/filter');
-var _isPlainObject = require('lodash/isPlainObject');
-var _toPath = require('lodash/toPath');
-var _assign = require('lodash/assign');
-var _includes = require('lodash/includes');
-var _pickBy = require('lodash/pickBy');
-var _isArray = require('lodash/isArray');
+var _set = require('lodash/set')
+var _get = require('lodash/get')
+var _map = require('lodash/map')
+var _mapValues = require('lodash/mapValues')
+var _filter = require('lodash/filter')
+var _isPlainObject = require('lodash/isPlainObject')
+var _toPath = require('lodash/toPath')
+var _assign = require('lodash/assign')
+var _includes = require('lodash/includes')
+var _pickBy = require('lodash/pickBy')
+var _isArray = require('lodash/isArray')
 
-function set(obj, path, args) {
-  var value = args[0];
-  _set(obj, path, value);
+function set (obj, path, args) {
+  var value = args[0]
+  _set(obj, path, value)
 }
 
-function del(obj, path) {
-  var pathArray = _toPath(path);
-  var parentObj = _get(obj, pathArray.slice(0, -1));
+function del (obj, path) {
+  var pathArray = _toPath(path)
+  var parentObj = _get(obj, pathArray.slice(0, -1))
   if (_isArray(parentObj)) {
-    parentObj.splice(pathArray[pathArray.length - 1], 1);
-  } else if (_isPlainObject(parentObj)){
-    delete parentObj[pathArray[pathArray.length - 1]];
+    parentObj.splice(pathArray[pathArray.length - 1], 1)
+  } else if (_isPlainObject(parentObj)) {
+    delete parentObj[pathArray[pathArray.length - 1]]
   }
 }
 
-function _transform(obj, path, func) {
-  var objToTransform = _get(obj, path);
-  _set(obj, path, func(objToTransform));
+function _transform (obj, path, func) {
+  var objToTransform = _get(obj, path)
+  _set(obj, path, func(objToTransform, obj))
 }
 
-function transform(obj, path, args) {
-  var func = args[0];
-  _transform(obj, path, func);
+function transform (obj, path, args) {
+  var func = args[0]
+  _transform(obj, path, func)
 }
 
-function map(obj, path, args) {
-  var func = args[0];
+function map (obj, path, args) {
+  var func = args[0]
   _transform(obj, path, function (item) {
     if (_isArray(item)) {
-      return _map(item, func);
+      return _map(item, func)
     } else if (_isPlainObject(item)) {
-      return _mapValues(item, func);
+      return _mapValues(item, func)
     } else {
-      return func(item);
+      return func(item)
     }
-  });
+  })
 }
 
-function filter(obj, path, args) {
-  var func = args[0];
+function filter (obj, path, args) {
+  var func = args[0]
   _transform(obj, path, function (item) {
     if (_isArray(item)) {
-      return _filter(item, func);
+      return _filter(item, func)
     } else if (_isPlainObject(item)) {
-      return _pickBy(item, func);
+      return _pickBy(item, func)
     } else {
-      return func(item) ? item : undefined;
+      return func(item) ? item : undefined
     }
-  });
+  })
 }
 
-function append(obj, path, args) {
-  var arr = args[0];
+function append (obj, path, args) {
+  var arr = args[0]
   _transform(obj, path, function (item) {
     if (_isArray(item)) {
-      return item.concat(arr);
+      return item.concat(arr)
     } else {
-      return [item].concat(arr);
+      return [item].concat(arr)
     }
-  });
+  })
 }
 
-function prepend(obj, path, args) {
-  var arr = args[0];
+function prepend (obj, path, args) {
+  var arr = args[0]
   _transform(obj, path, function (item) {
     if (_isArray(item)) {
-      return arr.concat(item);
+      return arr.concat(item)
     } else {
-      return arr.concat([item]);
+      return arr.concat([item])
     }
-  });
+  })
 }
 
-function insert(obj, path, args) {
-  var arr = args[0];
-  var index = args[1] || 0;
+function insert (obj, path, args) {
+  var arr = args[0]
+  var index = args[1] || 0
 
   _transform(obj, path, function (item) {
-    var head, tail;
+    var head, tail
     if (_isArray(item)) {
-      head = item.slice(0, index);
-      tail = item.slice(index);
-      return [].concat(head, arr, tail);
+      head = item.slice(0, index)
+      tail = item.slice(index)
+      return [].concat(head, arr, tail)
     } else {
-      return arr.concat([item]);
+      return arr.concat([item])
     }
-  });
+  })
 }
 
-function merge(obj, path, args) {
-  var objToMerge = args[0];
+function merge (obj, path, args) {
+  var objToMerge = args[0]
   _transform(obj, path, function (item) {
     if (_isPlainObject(item)) {
-      return _assign({}, item, objToMerge);
+      return _assign({}, item, objToMerge)
     }
-    return item;
-  });
+    return item
+  })
 }
 
-function slice(obj, path, args) {
-  var begin = args[0];
-  var end = args[1];
+function slice (obj, path, args) {
+  var begin = args[0]
+  var end = args[1]
   _transform(obj, path, function (item) {
     if (_isArray(item)) {
-      return item.slice(begin, end);
+      return item.slice(begin, end)
     } else {
-      return item;
+      return item
     }
-  });
+  })
 }
 
-function removeKeys(obj, path, args) {
-  var keys = _isArray(args[0]) ? args[0] : [args[0]];
+function removeKeys (obj, path, args) {
+  var keys = _isArray(args[0]) ? args[0] : [args[0]]
   filter(obj, path, [function (value, key) {
-    return !_includes(keys, key);
-  }]);
+    return !_includes(keys, key)
+  }])
 }
 
-function removeValues(obj, path, args) {
-  var values = _isArray(args[0]) ? args[0] : [args[0]];
+function removeValues (obj, path, args) {
+  var values = _isArray(args[0]) ? args[0] : [args[0]]
   filter(obj, path, [function (value, key) {
-    return !_includes(values, value);
-  }]);
+    return !_includes(values, value)
+  }])
 }
 
 module.exports = {
@@ -148,5 +148,5 @@ module.exports = {
   slice: slice,
   removeIndexes: removeKeys,
   removeKeys: removeKeys,
-  removeValues: removeValues,
-};
+  removeValues: removeValues
+}

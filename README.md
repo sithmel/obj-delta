@@ -41,7 +41,7 @@ You can apply the change using the "apply" method:
 ```js
 var correctedData = delta.apply(data);
 ```
-The original data does not mutate.
+The original object: "data" does not mutate.
 ```js
 data === correctedData // false
 
@@ -56,7 +56,7 @@ data.heroes[3] === correctedData.heroes[3] // true
 
 correctedData.heroes[4] // is undefined
 ```
-You can notice that correctedData reuse references to the data object where they are not changed.
+You can notice that correctedData reuses references to the data object where they are not changed.
 
 Serializing/deserializing
 -------------------------
