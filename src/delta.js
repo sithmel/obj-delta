@@ -1,9 +1,10 @@
 var _isArray = require('lodash/isArray')
+var _includes = require('lodash/includes')
 var smartClone = require('./smartClone')
+var compactArrays = require('./compactArrays')
 var commands = require('./commands')
 var addToChangeTree = require('./addToChangeTree')
 var loadDiff = require('./loadDiff')
-var _includes = require('lodash/includes')
 
 var nonSerializable = ['map', 'transform', 'filter']
 
@@ -24,12 +25,12 @@ function Delta (diff) {
 Delta.prototype.apply = function apply (obj) {
   var newObj = smartClone(obj, this.changeTree)
   for (var i = 0; i < this._diff.length; i++) {
-    commands[this._diff[i].c](newObj, this._diff[i].p, this._diff[i].args)
+    newObj = commands[this._diff[i].c](newObj, this._diff[i].p, this._diff[i].args)
   }
+  compactArrays(newObj, this.changeTree)
   return newObj
 }
 
-// TODO ERROR return only an object NO stringify!!!
 Delta.prototype.toJSON = function toJSON () {
   if (this.serializable) {
     return this._diff

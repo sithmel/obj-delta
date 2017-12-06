@@ -117,6 +117,7 @@ delta()
 
 // { greetings: { hello: ['world', 'sun']} }
 ```
+Array are compacted at the end, after all deletions are applied.
 
 transform
 ---------

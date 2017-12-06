@@ -18,7 +18,7 @@ describe('commands', function () {
   it('del (array)', function () {
     var obj = { hello: [0, 1, 2] }
     c.del(obj, 'hello[1]')
-    assert.deepEqual(obj, { hello: [0, 2] })
+    assert.deepEqual(obj, { hello: [0,, 2] }) // eslint-disable-line
   })
 
   it('transform', function () {
