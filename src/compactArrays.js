@@ -7,7 +7,7 @@ function compactArrays (obj, changeTree) {
     compactArrays(obj[key], changeTree[key])
   }
   if (_isArray(obj)) {
-    _remove(obj, (item, index, arr) => !(index in arr)) // compact sparse arrays
+    _remove(obj, function (item, index, arr) { return !(index in arr) }) // compact sparse arrays
   }
 }
 
