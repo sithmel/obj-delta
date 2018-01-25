@@ -1,6 +1,6 @@
 {
   "name": "obj-delta",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A diff object that applies changes to an object in a way that share common structure where possible",
   "main": "index.js",
   "scripts": {
