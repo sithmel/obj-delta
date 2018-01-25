@@ -48,7 +48,7 @@ data === correctedData // false
 data.heroes === correctedData.heroes // false
 data.heroes[0] === correctedData.heroes[0] // false
 data.heroes[0].name === correctedData.heroes[0].name // true, quite obvious
-data.heroes[0].nickName === correctedData.heroes[0].nickName // false, quite obvious
+data.heroes[0].nickname === correctedData.heroes[0].nickname // false, quite obvious
 
 data.heroes[1] === correctedData.heroes[1] // true
 data.heroes[2] === correctedData.heroes[2] // true
@@ -96,7 +96,7 @@ delta()
   .set('greetings/hello', 'world')
   .apply({ greetings: {} });
 
-// { greetings: { hello: 'world' }}
+// { greetings: { hello: 'world' } }
 ```
 
 del
@@ -107,7 +107,7 @@ delta()
   .del('greetings/hello')
   .apply({ greetings: { hello: 'world'} });
 
-// { greetings: { }}
+// { greetings: { } }
 ```
 If used on an array index, it will compact the array after removing the item.
 ```js
@@ -127,7 +127,7 @@ delta()
   .transform('greetings/hello', (greeting) => greeting.toUpperCase())
   .apply({ greetings: { hello: 'world'} });
 
-// { greetings: { hello: 'WORLD' }}
+// { greetings: { hello: 'WORLD' } }
 ```
 If the original item is undefined, it will create the item.
 NOTE: you can't serialize an object if you use this command.

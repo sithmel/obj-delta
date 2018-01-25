@@ -14,20 +14,26 @@ function Delta (diff) {
   }
   diff = typeof diff === 'string' ? JSON.parse(diff) : diff
   this._diff = diff || []
-  this.changeTree = {}
   this.serializable = true
-  for (var i = 0; i < this._diff; i++) {
-    if (_includes(nonSerializable, this._diff[i].c)) this.serializable = false
-    addToChangeTree(this.changeTree, this._diff[i].p)
+  for (var i = 0; i < this._diff.length; i++) {
+    if (_includes(nonSerializable, this._diff[i].c)) {
+      this.serializable = false
+      break
+    }
   }
 }
 
 Delta.prototype.apply = function apply (obj) {
-  var newObj = smartClone(obj, this.changeTree)
+  var changeTree = {}
+  for (var j = 0; j < this._diff.length; j++) {
+    addToChangeTree(changeTree, this._diff[j].p)
+  }
+
+  var newObj = smartClone(obj, changeTree)
   for (var i = 0; i < this._diff.length; i++) {
     newObj = commands[this._diff[i].c](newObj, this._diff[i].p, this._diff[i].args)
   }
-  compactArrays(newObj, this.changeTree)
+  compactArrays(newObj, changeTree)
   return newObj
 }
 
@@ -44,7 +50,6 @@ Delta.prototype._addCommand = function _addCommand (command, path, args) {
   }
   this._diff.push({ c: command, p: path, args: args })
   if (_includes(nonSerializable, command)) this.serializable = false
-  addToChangeTree(this.changeTree, path)
   return this
 }
 
