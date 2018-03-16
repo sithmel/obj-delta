@@ -13,6 +13,16 @@ describe('smart clone', function () {
     assert.equal(obj.world, newObj.world)
   })
 
+  it('clones an array', function () {
+    var obj = [{ hello: {} }, { hello: {} }]
+    var newObj = smartClone(obj, { '1': { hello: true } })
+
+    assert.deepEqual(obj, newObj)
+    assert.notEqual(obj, newObj)
+    assert.notEqual(obj[1].hello, newObj[1].hello)
+    assert.equal(obj[0], newObj[0])
+  })
+
   it('clones a simple object 2', function () {
     var obj = { hello: {
       world: {},

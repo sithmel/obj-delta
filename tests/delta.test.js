@@ -55,6 +55,14 @@ describe('Delta', function () {
       assert.equal(newObj.subtree, obj.subtree)
     })
 
+    it('set on array', function () {
+      var delta = Delta().set([1], 'world').set([2], 'world2')
+      var obj = ['hello', 'mars']
+      var newObj = delta.apply(obj)
+      assert.deepEqual(newObj, ['hello', 'world', 'world2'])
+      // assert.equal(newObj.subtree, obj.subtree)
+    })
+
     it('del', function () {
       var delta = Delta().del('hello.world')
       var obj = { hello: { world: 1, other: 2 }, hello2: {} }
