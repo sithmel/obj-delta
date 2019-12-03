@@ -4,12 +4,9 @@
   "description": "A diff object that applies changes to an object in a way that share common structure where possible",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/*.js",
+    "test": "mocha",
     "watch": "npm run test -- -w",
-    "lint": "eslint --fix --ext .js ./src ./tests",
-    "release:major": "npm-release major",
-    "release:minor": "npm-release minor",
-    "release:patch": "npm-release patch",
+    "lint": "eslint --fix ./src ./test",
     "precommit": "npm run lint",
     "prepush": "npm run test"
   },
@@ -31,8 +28,7 @@
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.14.3",
-    "mocha": "^4.0.1",
-    "npm-release": "^1.0.0"
+    "mocha": "^4.0.1"
   },
   "dependencies": {
     "lodash": "^4.17.11"
